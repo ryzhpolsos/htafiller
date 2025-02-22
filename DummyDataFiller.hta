@@ -1,37 +1,26 @@
-var oExcel = GetObject("Excel.Application");
-var data = WSH.Arguments(1);
-WSH.Echo(data);
-
-/*
 <!DOCTYPE html>
 <html>
     <head>
         <meta charset="UTF-8">
-        <meta http-equiv="X-UA-Compatible" content="ie=9">
+        <meta http-equiv="X-UA-Compatible" content="ie=8">
         <title>Excel DummyDataFiller</title>
-        <hta:application id="htaApp" border="dialog" maximizeButton="no" contextMenu="no" selection="no" scroll="no" />
+        <hta:application border="dialog" maximizeButton="no" contextMenu="no" selection="no" scroll="no" />
         <style>
+			body {
+				padding: 6px;
+			}
+
             body, input, select, button {
                 font-family: 'Segoe UI';
-            }
-
-            html {
-                color: white;
-            }
-
-            body {
-                color: black;
-            }
-
-            #cont {
-                width: 500px;
-                height: 400px;
-                background: white;
             }
 
             select, input {
                 width: 200px;
             }
+			
+			#cont {
+				display: inline-block;
+			}
         </style>
         <script>
             var names = [
@@ -45,8 +34,8 @@ WSH.Echo(data);
                 ["Ааронович", "Абрамович", "Августович", "Авдеевич", "Авенирович", "Аверьянович", "Адамович", "Адольфович", "Адрианович", "Акимович", "Аксёнович", "Александрович", "Алексеевич", "Анатольевич", "Андреевич", "Андроникович", "Анисимович", "Антипович", "Антонович", "Ануфриевич", "Аристархович", "Аркадьевич", "Арсенович", "Арсеньевич", "Артёмович", "Артемьевич", "Артурович", "Архипович", "Афанасьевич", "Ахматович", "Батькович", "Бедросович", "Бенедиктович", "Богданович", "Бориславич", "Бориславович", "Борисович", "Борисыч", "Брониславович", "Ваганович", "Вадимович", "Валентинович", "Валерианович", "Валерьевич", "Валерьянович", "Васильевич", "Вахтангович", "Венедиктович", "Вениаминович", "Викентьевич", "Викторович", "Виленович", "Вилорович", "Виссарионович", "Витальевич", "Владиленович", "Владимирович", "Владиславович", "Владленович", "Власович", "Вольфович", "Всеволодович", "Вячеславович", "Гавриилович", "Гаврилович", "Гаджиевич", "Геннадиевич", "Геннадьевич", "Генрихович", "Георгиевич", "Герасимович", "Германович", "Гертрудович", "Глебович", "Гордеевич", "Горыныч", "Григорьевич", "Гурьевич", "Давидович", "Давыдович", "Даниилович", "Данилович", "Демидович", "Демьянович", "Денисович", "Димитриевич", "Дмитриевич", "Дорофеевич", "Евгеньевич", "Евграфович", "Евдокимович", "Евсеевич", "Евстигнеевич", "Егорович", "Елизарович", "Елисеевич", "Емельянович", "Еремеевич", "Ермилович", "Ермолаевич", "Ерофеевич", "Ефимович", "Ефимьевич", "Ефремович", "Ефстафьевич", "Жанович", "Жоресович", "Захарович", "Захарьевич", "Зиновьевич", "Ибрагимович", "Иванович", "Иваныч", "Ивсталинович", "Игнатович", "Игнатьевич", "Игоревич", "Измаилович", "Изотович", "Израилевич", "Иларионович", "Ильгизович", "Ильич", "Ильмирович", "Ильнурович", "Ильсурович", "Ильясович", "Иоаннович", "Иосипович", "Иосифович", "Исаевич", "Исидорович", "Каллиникович", "Каллистратович", "Кириллович", "Константинович", "Леонидович", "Леонович", "Леонтьевич", "Львович", "Магомедович", "Магометович", "Макарович", "Максимилианович", "Максимович", "Маркович", "Маркыч", "Матвеевич", "Михайлович", "Михалыч", "Натанович", "Наумович", "Никандрович", "Никанорович", "Никитич", "Никитович", "Никифорович", "Никодимович", "Николаевич", "Никонович", "Олегович", "Осипович", "Павлович", "Петрович", "Платонович", "Прокопович", "Прохорович", "Романович", "Ростиславович", "Рудольфович", "Русланович", "Рустамович", "Семёнович", "Сергеевич", "Сидорович", "Сильвестрович", "Соломонович", "Степанович", "Тарасович", "Теймуразович", "Терентьевич", "Тимофеевич", "Тимурович", "Тихонович", "Трифонович", "Трофимович", "Устимович", "Устинович", "Фадеевич", "Фёдорович", "Федосеевич", "Федосьевич", "Федотович", "Феликсович", "Феодосьевич", "Феоктистович", "Феофанович", "Филатович", "Филимонович", "Филиппович"],
                 ["Августовна", "Авенировна", "Акимовна", "Александровна", "Алексеевна", "Анатольевна", "Андреевна", "Андрониковна", "Антоновна", "Аркадьевна", "Афанасьевна", "Ахматовна", "Батьковна", "Богдановна", "Борисовна", "Брониславовна", "Вадимовна", "Валентиновна", "Валерьевна", "Васильевна", "Вахтанговна", "Вениаминовна", "Викторовна", "Виссарионовна", "Витальевна", "Владимировна", "Владиславовна", "Вячеславовна", "Гавриловна", "Гаджиевна", "Геннадьевна", "Генриховна", "Георгиевна", "Глебовна", "Григорьевна", "Денисовна", "Дмитриевна", "Евгеньевна", "Евдокимовна", "Ивановна", "Игнатьевна", "Игоревна", "Ильгизовна", "Ильмировна", "Ильнуровна", "Ильсуровна", "Иоанновна", "Иосифовна", "Исаевна", "Каллиниковна", "Каллистратовна", "Константиновна", "Ксенофонтьевна", "Кузьминична", "Леонидовна", "Львовна", "Магомедовна", "Магометовна", "Макаровна", "Максимилиановна", "Максимовна", "Марковна", "Михайловна", "Мунавировна", "Натановна", "Никандровна", "Никаноровна", "Никитична", "Никитовна", "Никифоровна", "Никодимовна", "Николаевна", "Никоновна", "Олеговна", "Осиповна", "Павловна", "Петровна", "Платоновна", "Прохоровна", "Романовна", "Рудольфовна", "Рустамовна", "Сахипзадовна", "Семёновна", "Сергеевна", "Сидоровна", "Сильвестровна", "Соломоновна", "Станиславовна", "Степановна", "Тельмановна", "Тимофеевна", "Фёдоровна", "Филипповна", "Юрьевна", "Яковлевна", "Ярославовна"]
             ];
-
-            resizeTo(500, 400);
+			
+			resizeTo(500, 400);
         </script>
     </head>
     <body>
@@ -58,7 +47,7 @@ WSH.Echo(data);
                         <select id="data-type">
                             <option id="fio-full">ФИО</option>
                             <option id="fio-sort">ФИО (инициалы)</option>
-                            <option id="date">Дата</option>
+                            <!--option id="date">Дата</option-->
                             <option id="number">Число</option>
                         </select>
                     </td>
@@ -84,44 +73,112 @@ WSH.Echo(data);
                 <button id="start">Начать заполнение</button>
             </center>
         </div>
+		<script type="text/vbscript">
+			Function input(prompt, title, default)
+				input = InputBox(prompt, title, default)
+			End Function
+		</script>
         <script type="text/javascript">
-            document.body.innerHTML = document.body.innerHTML.split("/*")[1];
-            //var WshShell = new ActiveXObject("WScript.Shell");
+            var oExcel;
+
+			try{
+				oExcel = GetObject("", "Excel.Application");
+			}catch(e){
+				alert("Запустите Microsoft Excel");
+				close();
+			}
 
             function getRandomFromList(list){
                 return list[Math.floor(Math.random() * list.length)];
             }
-
-            function runScript(data){
-                //alert("wscript.exe //e:javascript \"" + htaApp.commandLine + "\" \"" + data + "\"");
-            }
+			
+			function getRandomInt(min, max) {
+				min = Math.ceil(min);
+				max = Math.floor(max);
+				return Math.floor(Math.random() * (max - min + 1)) + min;
+			}
 
             document.querySelector("#start").onclick = function(){
-                var dataType = document.querySelector("#data-type").value;
+                var dataType = document.querySelector("#data-type").selectedIndex;
+				var direction = document.querySelector("#direction").selectedIndex;
                 var count = parseInt(document.querySelector("#count").value);
 
-                alert(dataType);
                 switch(dataType){
-                    case "ФИО": {
-
-                        runScript("test");
-                        break;
-                    }
-                    case "ФИО (инициалы)": {
-
-                        break;
-                    }
-                    case "Дата": {
-
-                        break;
-                    }
-                    case "Число": {
+                    case 0: {
+						for(var i = 0; i < count; i++){
+							var gdr = Math.round(Math.random());
+							var fio = getRandomFromList(snames) + (gdr?"а":"") + " " + getRandomFromList(names[gdr]) + " " + getRandomFromList(mnames[gdr]);
+							
+							if(direction == 0){
+								oExcel.Cells(oExcel.ActiveCell.Row + i, oExcel.ActiveCell.Column).Value = fio;
+							}else{
+								oExcel.Cells(oExcel.ActiveCell.Row, oExcel.ActiveCell.Column + i).Value = fio;
+							}
+						}
 
                         break;
                     }
+                    case 1: {
+						for(var i = 0; i < count; i++){
+							var gdr = Math.round(Math.random());
+							var fio = getRandomFromList(snames) + (gdr?"а":"") + " " + getRandomFromList(names[gdr])[0] + ". " + getRandomFromList(mnames[gdr])[0] + ".";
+							
+							if(direction == 0){
+								oExcel.Cells(oExcel.ActiveCell.Row + i, oExcel.ActiveCell.Column).Value = fio;
+							}else{
+								oExcel.Cells(oExcel.ActiveCell.Row, oExcel.ActiveCell.Column + i).Value = fio;
+							}
+						}
+
+                        break;
+                    }
+                    case -1: {
+						var min = input("Введите минимальную дату (дд.мм.гггг)", document.title, 0);
+						if(min === undefined || min.length == 0) return;
+
+						var max = input("Введите максимальную дату (дд.мм.гггг)", document.title, 0);
+						if(max === undefined || max.length == 0) return;
+
+						min = parseInt(min);
+						max = parseInt(max);
+
+						for(var i = 0; i < count; i++){
+							var num = getRandomInt(min, max);
+
+							if(direction == 0){
+								oExcel.Cells(oExcel.ActiveCell.Row + i, oExcel.ActiveCell.Column).Value = num;
+							}else{
+								oExcel.Cells(oExcel.ActiveCell.Row, oExcel.ActiveCell.Column + i).Value = num;
+							}
+						}
+
+                        break;
+                    }
+					case 2: {
+						var min = input("Введите минимальное число", document.title, 0);
+						if(min === undefined || min.length == 0) return;
+
+						var max = input("Введите максимальное число", document.title, 0);
+						if(max === undefined || max.length == 0) return;
+
+						min = parseInt(min);
+						max = parseInt(max);
+
+						for(var i = 0; i < count; i++){
+							var num = getRandomInt(min, max);
+
+							if(direction == 0){
+								oExcel.Cells(oExcel.ActiveCell.Row + i, oExcel.ActiveCell.Column).Value = num;
+							}else{
+								oExcel.Cells(oExcel.ActiveCell.Row, oExcel.ActiveCell.Column + i).Value = num;
+							}
+						}
+
+                        break;
+                    }
+                    
                 }
             };
         </script>
     </body>
 </html>
-*/
